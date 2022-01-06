@@ -1,0 +1,51 @@
+Java Version: openjdk version "1.8.0_312"
+
+Install Apache Spark
+-----------------------
+
+--Download Apache Spark
+1.wget https://downloads.apache.org/spark/spark-3.0.3/spark-3.0.3-bin-hadoop2.7.tgz
+or
+2.Download from https://dlcdn.apache.org/spark/spark-3.0.3/spark-3.0.3-bin-hadoop2.7.tgz
+
+--Verify Download File
+    1. Currently not tested for local run but must be tested for Production
+
+--Extract the file
+    1.tar xvf spark-3.0.3-bin-hadoop2.7.tgz
+
+--Setting up the environment for Spark
+    1.Make an entry for Spark in .bashrc file
+        nano ~/.bashrc
+    2.Add the following line to the ~/.bashrc file. It means adding the location, where the spark software files are located to the PATH variable.
+        export SPARK_HOME=/home/tamjid/Work/spark-3.0.3-bin-hadoop2.7/
+        export PATH=$PATH:$SPARK_HOME/bin
+        Note: You can add $SPARK_HOME/sbin to the PATH variable
+            export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+    3.Use the following command for sourcing the ~/.bashrc file.
+        source ~/.bashrc
+
+--Starting a Cluster Manually
+    1. Start a standalone master server by executing
+        ./sbin/start-master.sh
+    2.To view the Spark Web user interface, open a web browser and enter the localhost IP address on port 8080.
+        http://127.0.0.1:8080/
+        OR
+        deviceName:Port ex: tamjid-lenovo-b41-80:8080/
+    3.You will see Spark Master at spark://tamjid-Lenovo-B41-80:7077
+    4.Run below command to start a worker node
+        ./sbin/start-slave.sh spark://tamjid-Lenovo-B41-80:7077
+        
+        --If you want to assign Core pass -c with number of core as parameter
+        --If you want to assign memory pass -m with memory ammount
+        ./sbin/start-slave.sh -c 2 -m 2G spark://tamjid-Lenovo-B41-80:7077
+
+--Stop Server
+    1.To stop the master instance started by executing the script above
+        ./sbin/stop-master.sh
+    2.To stop a running worker process, enter this command
+        ./sbin/stop-slave.sh
+    3.You can start both master and server instances by using the start-all command
+        ./sbin/start-all.sh
+    4.You can stop all instances by using the following command
+        ./sbin/stop-all.sh
